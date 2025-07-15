@@ -25,4 +25,33 @@ public class GenericDAO<T> implements IGenericDAO<T> {
 
 		return entity;
 	}
+
+	@Override
+	public T searchById(Class<T> classType, Long id) {
+		EntityManagerFactory entityManagerFactory = Persistence.createEntityManagerFactory("Study_Of_Java_JPA");
+		EntityManager entityManager = entityManagerFactory.createEntityManager();
+
+		entityManager.getTransaction().begin();
+		T entityFound = entityManager.find(classType, id);
+		entityManager.getTransaction().commit();
+
+		entityManager.close();
+		entityManagerFactory.close();
+
+		return entityFound;
+	}
+
+	@Override
+	public void delete(T entity) {
+		EntityManagerFactory entityManagerFactory = Persistence.createEntityManagerFactory("Study_Of_Java_JPA");
+		EntityManager entityManager = entityManagerFactory.createEntityManager();
+
+		entityManager.getTransaction().begin();
+		entity = entityManager.merge(entity);
+		entityManager.remove(entity);
+		entityManager.getTransaction().commit();
+
+		entityManager.close();
+		entityManagerFactory.close();
+	}
 }

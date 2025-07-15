@@ -8,4 +8,8 @@ package br.com.eaugusto.dao.generic;
 public interface IGenericDAO<T> {
 
 	public T register(T entity);
+
+	public T searchById(Class<T> classType, Long id);
+
+	public void delete(T entity);
 }

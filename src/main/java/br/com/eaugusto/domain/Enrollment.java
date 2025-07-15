@@ -55,10 +55,6 @@ public class Enrollment {
 		return status;
 	}
 
-	public void setId(Long id) {
-		this.id = id;
-	}
-
 	public void setCode(String code) {
 		this.code = code;
 	}
