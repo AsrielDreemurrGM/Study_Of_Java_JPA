@@ -1,5 +1,7 @@
 package br.com.eaugusto.dao.generic;
 
+import java.util.List;
+
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
@@ -39,6 +41,24 @@ public class GenericDAO<T> implements IGenericDAO<T> {
 		entityManagerFactory.close();
 
 		return entityFound;
+	}
+
+	@Override
+	public List<T> searchAll(Class<T> classType) {
+		EntityManagerFactory entityManagerFactory = Persistence.createEntityManagerFactory("Study_Of_Java_JPA");
+		EntityManager entityManager = entityManagerFactory.createEntityManager();
+
+		entityManager.getTransaction().begin();
+
+		String entityName = classType.getSimpleName();
+
+		List<T> list = entityManager.createQuery("SELECT e FROM " + entityName + " e", classType).getResultList();
+		entityManager.getTransaction().commit();
+
+		entityManager.close();
+		entityManagerFactory.close();
+
+		return list;
 	}
 
 	@Override

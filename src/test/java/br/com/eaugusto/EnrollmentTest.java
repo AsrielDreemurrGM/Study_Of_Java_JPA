@@ -6,6 +6,7 @@ import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 import java.time.Instant;
 import java.time.temporal.ChronoUnit;
+import java.util.List;
 
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
@@ -43,7 +44,7 @@ public class EnrollmentTest {
 	}
 
 	@Test
-	public void register() {
+	public void registerTest() {
 		enrollmentDAO.register(enrollment);
 
 		assertNotNull(enrollment);
@@ -51,7 +52,7 @@ public class EnrollmentTest {
 	}
 
 	@Test
-	public void searchById() {
+	public void searchByIdTest() {
 		enrollment = enrollmentDAO.register(enrollment);
 
 		Enrollment databaseEnrollment = enrollmentDAO.searchById(Enrollment.class, enrollment.getId());
@@ -66,7 +67,25 @@ public class EnrollmentTest {
 	}
 
 	@Test
-	public void deleteEnrollment() {
+	public void searchAllTest() {
+		enrollment = enrollmentDAO.register(enrollment);
+
+		List<Enrollment> enrollmentList = enrollmentDAO.searchAll(Enrollment.class);
+
+		assertNotNull(enrollmentList);
+
+		Enrollment databaseEnrollment = enrollmentList.get(0);
+		assertNotNull(databaseEnrollment);
+		assertEquals(enrollment.getId(), databaseEnrollment.getId());
+		assertEquals(enrollment.getCode(), databaseEnrollment.getCode());
+		assertEquals(enrollment.getEnrollmentDate().truncatedTo(ChronoUnit.MILLIS),
+				databaseEnrollment.getEnrollmentDate().truncatedTo(ChronoUnit.MILLIS));
+		assertEquals(enrollment.getAmount(), databaseEnrollment.getAmount());
+		assertEquals(enrollment.getStatus(), databaseEnrollment.getStatus());
+	}
+
+	@Test
+	public void deleteEnrollmentTest() {
 		Enrollment temporaryEnrollment = new Enrollment();
 		temporaryEnrollment.setCode("A2");
 		temporaryEnrollment.setEnrollmentDate(Instant.now());

@@ -4,6 +4,8 @@ import static org.junit.Assert.assertNull;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 
+import java.util.List;
+
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -39,14 +41,14 @@ public class CourseTest {
 	}
 
 	@Test
-	public void register() {
+	public void registerTest() {
 		course = courseDao.register(course);
 		assertNotNull(course);
 		assertNotNull(course.getId());
 	}
 
 	@Test
-	public void searchById() {
+	public void searchByIdTest() {
 		course = courseDao.register(course);
 
 		Course databaseCourse = courseDao.searchById(Course.class, course.getId());
@@ -59,7 +61,23 @@ public class CourseTest {
 	}
 
 	@Test
-	public void deleteCourse() {
+	public void searchAllTest() {
+		course = courseDao.register(course);
+
+		List<Course> courseList = courseDao.searchAll(Course.class);
+
+		assertNotNull(courseList);
+
+		Course databaseCourse = courseList.get(0);
+		assertNotNull(databaseCourse);
+		assertEquals(course.getId(), databaseCourse.getId());
+		assertEquals(course.getCode(), databaseCourse.getCode());
+		assertEquals(course.getName(), databaseCourse.getName());
+		assertEquals(course.getDescription(), databaseCourse.getDescription());
+	}
+
+	@Test
+	public void deleteCourseTest() {
 		Course temporaryCourse = new Course();
 		temporaryCourse.setCode("A2");
 		temporaryCourse.setName("To Delete");
