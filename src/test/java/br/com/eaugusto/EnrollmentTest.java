@@ -18,6 +18,20 @@ import br.com.eaugusto.dao.IEnrollmentDAO;
 import br.com.eaugusto.domain.Enrollment;
 
 /**
+ * Unit tests for {@link br.com.eaugusto.domain.Enrollment} entity using
+ * {@link br.com.eaugusto.dao.EnrollmentDAO}.
+ * 
+ * <p>
+ * This test class ensures that all core CRUD functionalities are working as
+ * expected for {@link Enrollment} entities, including handling of date-time
+ * attributes and numerical values.
+ * </p>
+ *
+ * <p>
+ * Time-based fields are compared using
+ * {@link java.time.temporal.ChronoUnit#MILLIS} for accuracy.
+ * </p>
+ *
  * @author Eduardo Augusto (github.com/AsrielDreemurrGM/)
  * @since July 15, 2025
  */
@@ -30,6 +44,9 @@ public class EnrollmentTest {
 		enrollmentDAO = new EnrollmentDAO();
 	}
 
+	/**
+	 * Initializes an Enrollment instance before each test.
+	 */
 	@BeforeEach
 	public void createEnrollment() {
 		enrollment = new Enrollment();
@@ -39,11 +56,17 @@ public class EnrollmentTest {
 		enrollment.setAmount(2000.00);
 	}
 
+	/**
+	 * Cleans up the Enrollment instance after each test.
+	 */
 	@AfterEach
 	public void cleanupEnrollment() {
 		enrollmentDAO.delete(enrollment);
 	}
 
+	/**
+	 * Tests if an Enrollment can be successfully registered in the database.
+	 */
 	@Test
 	public void registerTest() {
 		enrollmentDAO.register(enrollment);
@@ -52,6 +75,9 @@ public class EnrollmentTest {
 		assertNotNull(enrollment.getId());
 	}
 
+	/**
+	 * Tests if an Enrollment can be retrieved by its ID.
+	 */
 	@Test
 	public void searchByIdTest() {
 		enrollment = enrollmentDAO.register(enrollment);
@@ -67,6 +93,9 @@ public class EnrollmentTest {
 		assertEquals(enrollment.getStatus(), databaseEnrollment.getStatus());
 	}
 
+	/**
+	 * Tests if all registered Enrollments can be retrieved.
+	 */
 	@Test
 	public void searchAllTest() {
 		enrollment = enrollmentDAO.register(enrollment);
@@ -87,6 +116,9 @@ public class EnrollmentTest {
 		assertEquals(enrollment.getStatus(), databaseEnrollment.getStatus());
 	}
 
+	/**
+	 * Tests if an Enrollment can be updated correctly.
+	 */
 	@Test
 	public void updateTest() {
 		enrollment = enrollmentDAO.register(enrollment);
@@ -115,6 +147,9 @@ public class EnrollmentTest {
 				databaseEnrollment.getEnrollmentDate().truncatedTo(ChronoUnit.MILLIS));
 	}
 
+	/**
+	 * Tests if an Enrollment can be deleted and is no longer found in the database.
+	 */
 	@Test
 	public void deleteEnrollmentTest() {
 		Enrollment temporaryEnrollment = new Enrollment();

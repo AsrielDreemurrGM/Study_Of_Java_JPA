@@ -18,6 +18,20 @@ import br.com.eaugusto.dao.ProductDAO;
 import br.com.eaugusto.domain.Product;
 
 /**
+ * Unit tests for {@link br.com.eaugusto.domain.Product} entity using
+ * {@link br.com.eaugusto.dao.ProductDAO}.
+ *
+ * <p>
+ * This test class ensures that all core CRUD functionalities are working as
+ * expected for {@link Product} entities, including handling of date-time
+ * attributes and numerical values.
+ * </p>
+ *
+ * <p>
+ * Time-based fields are compared using
+ * {@link java.time.temporal.ChronoUnit#MILLIS} for accuracy.
+ * </p>
+ *
  * @author Eduardo Augusto (github.com/AsrielDreemurrGM/)
  * @since July 16, 2025
  */
@@ -30,6 +44,9 @@ public class ProductTest {
 		productDao = new ProductDAO();
 	}
 
+	/**
+	 * Initializes a Product instance before each test.
+	 */
 	@BeforeEach
 	public void createProduct() {
 		product = new Product();
@@ -41,11 +58,17 @@ public class ProductTest {
 		product.setCreationDate(Instant.now());
 	}
 
+	/**
+	 * Cleans up the Product instance after each test.
+	 */
 	@AfterEach
 	public void cleanupProduct() {
 		productDao.delete(product);
 	}
 
+	/**
+	 * Tests if a Product can be successfully registered in the database.
+	 */
 	@Test
 	public void registerTest() {
 		product = productDao.register(product);
@@ -53,6 +76,9 @@ public class ProductTest {
 		assertNotNull(product.getId());
 	}
 
+	/**
+	 * Tests if a Product can be retrieved by its ID.
+	 */
 	@Test
 	public void searchByIdTest() {
 		product = productDao.register(product);
@@ -70,6 +96,9 @@ public class ProductTest {
 				databaseProduct.getCreationDate().truncatedTo(ChronoUnit.MILLIS));
 	}
 
+	/**
+	 * Tests if all registered Products can be retrieved.
+	 */
 	@Test
 	public void searchAllTest() {
 		product = productDao.register(product);
@@ -92,6 +121,9 @@ public class ProductTest {
 				databaseProduct.getCreationDate().truncatedTo(ChronoUnit.MILLIS));
 	}
 
+	/**
+	 * Tests if a Product can be updated correctly.
+	 */
 	@Test
 	public void updateTest() {
 		product = productDao.register(product);
@@ -126,6 +158,9 @@ public class ProductTest {
 				databaseProduct.getCreationDate().truncatedTo(ChronoUnit.MILLIS));
 	}
 
+	/**
+	 * Tests if a Product can be deleted and is no longer found in the database.
+	 */
 	@Test
 	public void deleteTest() {
 		Product temporaryProduct = new Product();

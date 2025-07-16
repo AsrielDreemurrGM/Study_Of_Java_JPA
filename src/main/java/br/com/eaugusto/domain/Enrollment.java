@@ -11,8 +11,18 @@ import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
 /**
+ * Represents an enrollment record of a student in a course or program.
+ *
+ * <p>
+ * This class is mapped to the table {@code tb_enrollment} and holds information
+ * such as enrollment date, payment amount, and enrollment status.
+ * </p>
+ *
  * @author Eduardo Augusto (github.com/AsrielDreemurrGM/)
  * @since July 15, 2025
+ * 
+ * @see javax.persistence.Entity
+ * @see javax.persistence.Table
  */
 @Entity
 @Table(name = "tb_enrollment")

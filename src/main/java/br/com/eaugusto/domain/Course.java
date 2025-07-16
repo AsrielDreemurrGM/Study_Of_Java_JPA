@@ -9,8 +9,17 @@ import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
 /**
+ * Represents a course entity with its identifying code, name, and description.
+ *
+ * <p>
+ * This class is mapped to the database table {@code tb_course}.
+ * </p>
+ *
  * @author Eduardo Augusto (github.com/AsrielDreemurrGM/)
  * @since July 14, 2025
+ * 
+ * @see javax.persistence.Entity
+ * @see javax.persistence.Table
  */
 @Entity
 @Table(name = "tb_course")

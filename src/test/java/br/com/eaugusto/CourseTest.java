@@ -16,6 +16,19 @@ import br.com.eaugusto.dao.ICourseDAO;
 import br.com.eaugusto.domain.Course;
 
 /**
+ * Unit tests for {@link br.com.eaugusto.domain.Course} entity using
+ * {@link br.com.eaugusto.dao.CourseDAO}.
+ *
+ * <p>
+ * This test class ensures that all core CRUD functionalities are working as
+ * expected for {@link Course} entities.
+ * </p>
+ *
+ * <p>
+ * Each test ensures correct persistence behavior through the generic DAO
+ * structure.
+ * </p>
+ *
  * @author Eduardo Augusto (github.com/AsrielDreemurrGM/)
  * @since July 15, 2025
  */
@@ -28,6 +41,9 @@ public class CourseTest {
 		courseDao = new CourseDAO();
 	}
 
+	/**
+	 * Initializes a Course instance before each test.
+	 */
 	@BeforeEach
 	public void createCourse() {
 		course = new Course();
@@ -36,11 +52,17 @@ public class CourseTest {
 		course.setDescription("Java-Backend-Test-Course");
 	}
 
+	/**
+	 * Cleans up the Course instance after each test.
+	 */
 	@AfterEach
 	public void cleanupCourse() {
 		courseDao.delete(course);
 	}
 
+	/**
+	 * Tests if a Course can be successfully registered in the database.
+	 */
 	@Test
 	public void registerTest() {
 		course = courseDao.register(course);
@@ -48,6 +70,9 @@ public class CourseTest {
 		assertNotNull(course.getId());
 	}
 
+	/**
+	 * Tests if a Course can be retrieved by its ID.
+	 */
 	@Test
 	public void searchByIdTest() {
 		course = courseDao.register(course);
@@ -61,6 +86,9 @@ public class CourseTest {
 		assertEquals(course.getDescription(), databaseCourse.getDescription());
 	}
 
+	/**
+	 * Tests if all registered Courses can be retrieved.
+	 */
 	@Test
 	public void searchAllTest() {
 		course = courseDao.register(course);
@@ -79,6 +107,9 @@ public class CourseTest {
 		assertEquals(course.getDescription(), databaseCourse.getDescription());
 	}
 
+	/**
+	 * Tests if a Course can be updated correctly.
+	 */
 	@Test
 	public void updateTest() {
 		course = courseDao.register(course);
@@ -102,6 +133,9 @@ public class CourseTest {
 		assertEquals(course.getDescription(), databaseCourse.getDescription());
 	}
 
+	/**
+	 * Tests if a Course can be deleted and is no longer found in the database.
+	 */
 	@Test
 	public void deleteTest() {
 		Course temporaryCourse = new Course();

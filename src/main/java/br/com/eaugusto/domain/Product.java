@@ -11,8 +11,19 @@ import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
 /**
+ * Represents a product entity with details such as code, name, price, and stock
+ * information.
+ *
+ * <p>
+ * This class is mapped to the database table {@code tb_product} and is managed
+ * by JPA using {@link javax.persistence.EntityManager}.
+ * </p>
+ *
  * @author Eduardo Augusto (github.com/AsrielDreemurrGM/)
  * @since July 16, 2025
+ * 
+ * @see javax.persistence.Entity
+ * @see javax.persistence.Table
  */
 @Entity
 @Table(name = "tb_product")
