@@ -2,6 +2,7 @@ package br.com.eaugusto;
 
 import static org.junit.Assert.assertNull;
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 import java.util.List;
@@ -67,8 +68,10 @@ public class CourseTest {
 		List<Course> courseList = courseDao.searchAll(Course.class);
 
 		assertNotNull(courseList);
+		assertFalse(courseList.isEmpty());
 
 		Course databaseCourse = courseList.get(0);
+
 		assertNotNull(databaseCourse);
 		assertEquals(course.getId(), databaseCourse.getId());
 		assertEquals(course.getCode(), databaseCourse.getCode());
@@ -77,7 +80,30 @@ public class CourseTest {
 	}
 
 	@Test
-	public void deleteCourseTest() {
+	public void updateTest() {
+		course = courseDao.register(course);
+
+		course.setCode("A3");
+		course.setName("New Information");
+		course.setDescription("Temporary Update Course");
+
+		Course updatedCourse = courseDao.update(course);
+
+		assertNotNull(updatedCourse);
+		assertEquals(course.getId(), updatedCourse.getId());
+		assertEquals(course.getCode(), updatedCourse.getCode());
+		assertEquals(course.getName(), updatedCourse.getName());
+		assertEquals(course.getDescription(), updatedCourse.getDescription());
+
+		Course databaseCourse = courseDao.searchById(Course.class, updatedCourse.getId());
+
+		assertEquals(course.getCode(), databaseCourse.getCode());
+		assertEquals(course.getName(), databaseCourse.getName());
+		assertEquals(course.getDescription(), databaseCourse.getDescription());
+	}
+
+	@Test
+	public void deleteTest() {
 		Course temporaryCourse = new Course();
 		temporaryCourse.setCode("A2");
 		temporaryCourse.setName("To Delete");
@@ -89,5 +115,4 @@ public class CourseTest {
 		Course result = courseDao.searchById(Course.class, temporaryCourse.getId());
 		assertNull(result);
 	}
-
 }

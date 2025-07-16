@@ -62,6 +62,21 @@ public class GenericDAO<T> implements IGenericDAO<T> {
 	}
 
 	@Override
+	public T update(T entityWithNewInformation) {
+		EntityManagerFactory entityManagerFactory = Persistence.createEntityManagerFactory("Study_Of_Java_JPA");
+		EntityManager entityManager = entityManagerFactory.createEntityManager();
+
+		entityManager.getTransaction().begin();
+		T updatedEntity = entityManager.merge(entityWithNewInformation);
+		entityManager.getTransaction().commit();
+
+		entityManager.close();
+		entityManagerFactory.close();
+
+		return updatedEntity;
+	}
+
+	@Override
 	public void delete(T entity) {
 		EntityManagerFactory entityManagerFactory = Persistence.createEntityManagerFactory("Study_Of_Java_JPA");
 		EntityManager entityManager = entityManagerFactory.createEntityManager();

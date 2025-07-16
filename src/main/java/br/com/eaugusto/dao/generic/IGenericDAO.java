@@ -15,5 +15,7 @@ public interface IGenericDAO<T> {
 
 	public List<T> searchAll(Class<T> classType);
 
+	public T update(T entityWithNewInformation);
+
 	public void delete(T entity);
 }
