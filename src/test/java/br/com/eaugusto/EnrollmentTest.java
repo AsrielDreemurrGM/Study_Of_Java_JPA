@@ -17,8 +17,11 @@ import br.com.eaugusto.dao.CourseDAO;
 import br.com.eaugusto.dao.EnrollmentDAO;
 import br.com.eaugusto.dao.ICourseDAO;
 import br.com.eaugusto.dao.IEnrollmentDAO;
+import br.com.eaugusto.dao.IStudentDAO;
+import br.com.eaugusto.dao.StudentDAO;
 import br.com.eaugusto.domain.Course;
 import br.com.eaugusto.domain.Enrollment;
+import br.com.eaugusto.domain.Student;
 
 /**
  * Unit tests for {@link br.com.eaugusto.domain.Enrollment} entity using
@@ -42,12 +45,15 @@ public class EnrollmentTest {
 
 	private final IEnrollmentDAO enrollmentDAO;
 	private final ICourseDAO courseDAO;
+	private final IStudentDAO studentDao;
 	private Enrollment enrollment;
 	private Course course;
+	private Student student;
 
 	public EnrollmentTest() {
 		enrollmentDAO = new EnrollmentDAO();
 		courseDAO = new CourseDAO();
+		studentDao = new StudentDAO();
 	}
 
 	/**
@@ -56,6 +62,7 @@ public class EnrollmentTest {
 	@BeforeEach
 	public void createEnrollment() {
 		course = createCourse();
+		student = createStudent();
 
 		enrollment = new Enrollment();
 		enrollment.setCode("A1");
@@ -63,23 +70,33 @@ public class EnrollmentTest {
 		enrollment.setStatus("ACTIVE");
 		enrollment.setAmount(2000.00);
 		enrollment.setCourse(course);
+		enrollment.setStudent(student);
+		student.setEnrollment(enrollment);
 	}
 
 	/**
 	 * Initializes a Course instance.
-	 * 
-	 * @param code Course code
 	 */
 	public Course createCourse() {
 		Course newCourse = new Course();
-		newCourse.setCode("TM" + System.currentTimeMillis() % 100000);
+		newCourse.setCode("TM" + System.currentTimeMillis() % 100_000_000);
 		newCourse.setName("Enrollment Test Course");
 		newCourse.setDescription("Java-ManyToOne-OneToMany-Test-Course");
 		return courseDAO.register(newCourse);
 	}
 
 	/**
-	 * Cleans up the Enrollment and Course instances after each test.
+	 * Initializes a Student instance.
+	 */
+	public Student createStudent() {
+		Student newStudent = new Student();
+		newStudent.setCode("TIME" + System.currentTimeMillis() % 10000);
+		newStudent.setName("Enrollment Test Course");
+		return studentDao.register(newStudent);
+	}
+
+	/**
+	 * Cleans up the Enrollment, Course and Student instances after each test.
 	 */
 	@AfterEach
 	public void cleanup() {
@@ -91,6 +108,11 @@ public class EnrollmentTest {
 		List<Course> allCourses = courseDAO.searchAll(Course.class);
 		for (Course eachCourse : allCourses) {
 			courseDAO.delete(eachCourse);
+		}
+
+		List<Student> allStudents = studentDao.searchAll(Student.class);
+		for (Student eachStudent : allStudents) {
+			studentDao.delete(eachStudent);
 		}
 	}
 
@@ -121,6 +143,8 @@ public class EnrollmentTest {
 				databaseEnrollment.getEnrollmentDate().truncatedTo(ChronoUnit.MILLIS));
 		assertEquals(enrollment.getAmount(), databaseEnrollment.getAmount());
 		assertEquals(enrollment.getStatus(), databaseEnrollment.getStatus());
+		assertEquals(enrollment.getCourse().getId(), databaseEnrollment.getCourse().getId());
+		assertEquals(enrollment.getStudent().getId(), databaseEnrollment.getStudent().getId());
 	}
 
 	/**
@@ -144,6 +168,8 @@ public class EnrollmentTest {
 				databaseEnrollment.getEnrollmentDate().truncatedTo(ChronoUnit.MILLIS));
 		assertEquals(enrollment.getAmount(), databaseEnrollment.getAmount());
 		assertEquals(enrollment.getStatus(), databaseEnrollment.getStatus());
+		assertEquals(enrollment.getCourse().getId(), databaseEnrollment.getCourse().getId());
+		assertEquals(enrollment.getStudent().getId(), databaseEnrollment.getStudent().getId());
 	}
 
 	/**
@@ -153,12 +179,14 @@ public class EnrollmentTest {
 	public void updateTest() {
 		enrollment = enrollmentDAO.register(enrollment);
 		course = createCourse();
+		student = createStudent();
 
 		enrollment.setCode("A3");
 		enrollment.setEnrollmentDate(Instant.now());
 		enrollment.setStatus("INACTIVE");
 		enrollment.setAmount(2500.00);
 		enrollment.setCourse(course);
+		enrollment.setStudent(student);
 
 		Enrollment updatedEnrollment = enrollmentDAO.update(enrollment);
 
@@ -169,6 +197,7 @@ public class EnrollmentTest {
 		assertEquals(enrollment.getEnrollmentDate().truncatedTo(ChronoUnit.MILLIS),
 				updatedEnrollment.getEnrollmentDate().truncatedTo(ChronoUnit.MILLIS));
 		assertEquals(enrollment.getCourse().getId(), updatedEnrollment.getCourse().getId());
+		assertEquals(enrollment.getStudent().getId(), updatedEnrollment.getStudent().getId());
 
 		Enrollment databaseEnrollment = enrollmentDAO.searchById(Enrollment.class, updatedEnrollment.getId());
 
@@ -179,6 +208,7 @@ public class EnrollmentTest {
 		assertEquals(enrollment.getEnrollmentDate().truncatedTo(ChronoUnit.MILLIS),
 				databaseEnrollment.getEnrollmentDate().truncatedTo(ChronoUnit.MILLIS));
 		assertEquals(enrollment.getCourse().getId(), databaseEnrollment.getCourse().getId());
+		assertEquals(enrollment.getStudent().getId(), databaseEnrollment.getStudent().getId());
 	}
 
 	/**
@@ -187,6 +217,7 @@ public class EnrollmentTest {
 	@Test
 	public void deleteEnrollmentTest() {
 		Course temporaryCourse = createCourse();
+		Student temporaryStudent = createStudent();
 
 		Enrollment temporaryEnrollment = new Enrollment();
 		temporaryEnrollment.setCode("A2");
@@ -194,16 +225,20 @@ public class EnrollmentTest {
 		temporaryEnrollment.setStatus("ACTIVE");
 		temporaryEnrollment.setAmount(2500.00);
 		temporaryEnrollment.setCourse(temporaryCourse);
+		temporaryEnrollment.setStudent(temporaryStudent);
 
 		temporaryEnrollment = enrollmentDAO.register(temporaryEnrollment);
-		enrollmentDAO.delete(temporaryEnrollment);
 
-		Enrollment result = enrollmentDAO.searchById(Enrollment.class, temporaryEnrollment.getId());
-		assertNull(result);
+		enrollmentDAO.delete(temporaryEnrollment);
+		Enrollment enrollmentSearch = enrollmentDAO.searchById(Enrollment.class, temporaryEnrollment.getId());
+		assertNull(enrollmentSearch);
 
 		courseDAO.delete(temporaryCourse);
+		Course courseSearch = courseDAO.searchById(Course.class, temporaryCourse.getId());
+		assertNull(courseSearch);
 
-		Course result2 = courseDAO.searchById(Course.class, temporaryCourse.getId());
-		assertNull(result2);
+		studentDao.delete(temporaryStudent);
+		Student studentSearch = studentDao.searchById(Student.class, temporaryStudent.getId());
+		assertNull(studentSearch);
 	}
 }

@@ -52,6 +52,14 @@ public class Enrollment {
 	@JoinColumn(name = "id_course_fk", foreignKey = @ForeignKey(name = "fk_course_enrollment"), referencedColumnName = "id", nullable = false)
 	private Course course;
 
+	@ManyToOne
+	@JoinColumn(name = "id_student_fk", foreignKey = @ForeignKey(name = "fk_student_enrollment"), referencedColumnName = "id", nullable = false)
+	private Student student;
+
+	public Student getStudent() {
+		return student;
+	}
+
 	public Long getId() {
 		return id;
 	}
@@ -94,5 +102,9 @@ public class Enrollment {
 
 	public void setCourse(Course course) {
 		this.course = course;
+	}
+
+	public void setStudent(Student student) {
+		this.student = student;
 	}
 }
