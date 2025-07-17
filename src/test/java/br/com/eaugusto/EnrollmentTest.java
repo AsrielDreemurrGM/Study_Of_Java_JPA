@@ -13,8 +13,11 @@ import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
+import br.com.eaugusto.dao.CourseDAO;
 import br.com.eaugusto.dao.EnrollmentDAO;
+import br.com.eaugusto.dao.ICourseDAO;
 import br.com.eaugusto.dao.IEnrollmentDAO;
+import br.com.eaugusto.domain.Course;
 import br.com.eaugusto.domain.Enrollment;
 
 /**
@@ -38,10 +41,13 @@ import br.com.eaugusto.domain.Enrollment;
 public class EnrollmentTest {
 
 	private final IEnrollmentDAO enrollmentDAO;
+	private final ICourseDAO courseDAO;
 	private Enrollment enrollment;
+	private Course course;
 
 	public EnrollmentTest() {
 		enrollmentDAO = new EnrollmentDAO();
+		courseDAO = new CourseDAO();
 	}
 
 	/**
@@ -49,19 +55,43 @@ public class EnrollmentTest {
 	 */
 	@BeforeEach
 	public void createEnrollment() {
+		course = createCourse();
+
 		enrollment = new Enrollment();
 		enrollment.setCode("A1");
 		enrollment.setEnrollmentDate(Instant.now());
 		enrollment.setStatus("ACTIVE");
 		enrollment.setAmount(2000.00);
+		enrollment.setCourse(course);
 	}
 
 	/**
-	 * Cleans up the Enrollment instance after each test.
+	 * Initializes a Course instance.
+	 * 
+	 * @param code Course code
+	 */
+	public Course createCourse() {
+		Course newCourse = new Course();
+		newCourse.setCode("TM" + System.currentTimeMillis() % 100000);
+		newCourse.setName("Enrollment Test Course");
+		newCourse.setDescription("Java-ManyToOne-OneToMany-Test-Course");
+		return courseDAO.register(newCourse);
+	}
+
+	/**
+	 * Cleans up the Enrollment and Course instances after each test.
 	 */
 	@AfterEach
-	public void cleanupEnrollment() {
-		enrollmentDAO.delete(enrollment);
+	public void cleanup() {
+		List<Enrollment> allEnrollments = enrollmentDAO.searchAll(Enrollment.class);
+		for (Enrollment eachEnrollment : allEnrollments) {
+			enrollmentDAO.delete(eachEnrollment);
+		}
+
+		List<Course> allCourses = courseDAO.searchAll(Course.class);
+		for (Course eachCourse : allCourses) {
+			courseDAO.delete(eachCourse);
+		}
 	}
 
 	/**
@@ -122,11 +152,13 @@ public class EnrollmentTest {
 	@Test
 	public void updateTest() {
 		enrollment = enrollmentDAO.register(enrollment);
+		course = createCourse();
 
 		enrollment.setCode("A3");
 		enrollment.setEnrollmentDate(Instant.now());
 		enrollment.setStatus("INACTIVE");
 		enrollment.setAmount(2500.00);
+		enrollment.setCourse(course);
 
 		Enrollment updatedEnrollment = enrollmentDAO.update(enrollment);
 
@@ -136,6 +168,7 @@ public class EnrollmentTest {
 		assertEquals(enrollment.getStatus(), updatedEnrollment.getStatus());
 		assertEquals(enrollment.getEnrollmentDate().truncatedTo(ChronoUnit.MILLIS),
 				updatedEnrollment.getEnrollmentDate().truncatedTo(ChronoUnit.MILLIS));
+		assertEquals(enrollment.getCourse().getId(), updatedEnrollment.getCourse().getId());
 
 		Enrollment databaseEnrollment = enrollmentDAO.searchById(Enrollment.class, updatedEnrollment.getId());
 
@@ -145,6 +178,7 @@ public class EnrollmentTest {
 		assertEquals(enrollment.getStatus(), databaseEnrollment.getStatus());
 		assertEquals(enrollment.getEnrollmentDate().truncatedTo(ChronoUnit.MILLIS),
 				databaseEnrollment.getEnrollmentDate().truncatedTo(ChronoUnit.MILLIS));
+		assertEquals(enrollment.getCourse().getId(), databaseEnrollment.getCourse().getId());
 	}
 
 	/**
@@ -152,16 +186,24 @@ public class EnrollmentTest {
 	 */
 	@Test
 	public void deleteEnrollmentTest() {
+		Course temporaryCourse = createCourse();
+
 		Enrollment temporaryEnrollment = new Enrollment();
 		temporaryEnrollment.setCode("A2");
 		temporaryEnrollment.setEnrollmentDate(Instant.now());
 		temporaryEnrollment.setStatus("ACTIVE");
 		temporaryEnrollment.setAmount(2500.00);
+		temporaryEnrollment.setCourse(temporaryCourse);
 
 		temporaryEnrollment = enrollmentDAO.register(temporaryEnrollment);
 		enrollmentDAO.delete(temporaryEnrollment);
 
 		Enrollment result = enrollmentDAO.searchById(Enrollment.class, temporaryEnrollment.getId());
 		assertNull(result);
+
+		courseDAO.delete(temporaryCourse);
+
+		Course result2 = courseDAO.searchById(Course.class, temporaryCourse.getId());
+		assertNull(result2);
 	}
 }

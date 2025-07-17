@@ -4,9 +4,12 @@ import java.time.Instant;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.ForeignKey;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
@@ -45,6 +48,10 @@ public class Enrollment {
 	@Column(name = "status", nullable = false)
 	private String status;
 
+	@ManyToOne
+	@JoinColumn(name = "id_course_fk", foreignKey = @ForeignKey(name = "fk_course_enrollment"), referencedColumnName = "id", nullable = false)
+	private Course course;
+
 	public Long getId() {
 		return id;
 	}
@@ -65,6 +72,10 @@ public class Enrollment {
 		return status;
 	}
 
+	public Course getCourse() {
+		return course;
+	}
+
 	public void setCode(String code) {
 		this.code = code;
 	}
@@ -79,5 +90,9 @@ public class Enrollment {
 
 	public void setStatus(String status) {
 		this.status = status;
+	}
+
+	public void setCourse(Course course) {
+		this.course = course;
 	}
 }

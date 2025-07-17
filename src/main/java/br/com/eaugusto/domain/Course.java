@@ -1,10 +1,13 @@
 package br.com.eaugusto.domain;
 
+import java.util.List;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
@@ -39,6 +42,9 @@ public class Course {
 	@Column(name = "description", length = 100, nullable = false)
 	private String description;
 
+	@OneToMany(mappedBy = "course")
+	private List<Enrollment> enrollments;
+
 	public Long getId() {
 		return id;
 	}
@@ -55,6 +61,10 @@ public class Course {
 		return description;
 	}
 
+	public List<Enrollment> getEnrollments() {
+		return enrollments;
+	}
+
 	public void setCode(String code) {
 		this.code = code;
 	}
@@ -65,5 +75,9 @@ public class Course {
 
 	public void setDescription(String description) {
 		this.description = description;
+	}
+
+	public void setEnrollments(List<Enrollment> enrollments) {
+		this.enrollments = enrollments;
 	}
 }
