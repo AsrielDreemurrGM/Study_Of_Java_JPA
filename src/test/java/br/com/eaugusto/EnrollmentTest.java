@@ -105,15 +105,16 @@ public class EnrollmentTest {
 			enrollmentDAO.delete(eachEnrollment);
 		}
 
+		List<Student> allStudents = studentDao.searchAll(Student.class);
+		for (Student eachStudent : allStudents) {
+			studentDao.delete(eachStudent);
+		}
+
 		List<Course> allCourses = courseDAO.searchAll(Course.class);
 		for (Course eachCourse : allCourses) {
 			courseDAO.delete(eachCourse);
 		}
 
-		List<Student> allStudents = studentDao.searchAll(Student.class);
-		for (Student eachStudent : allStudents) {
-			studentDao.delete(eachStudent);
-		}
 	}
 
 	/**
@@ -229,7 +230,11 @@ public class EnrollmentTest {
 
 		temporaryEnrollment = enrollmentDAO.register(temporaryEnrollment);
 
+		temporaryStudent.setEnrollment(null);
+		studentDao.update(temporaryStudent);
+
 		enrollmentDAO.delete(temporaryEnrollment);
+
 		Enrollment enrollmentSearch = enrollmentDAO.searchById(Enrollment.class, temporaryEnrollment.getId());
 		assertNull(enrollmentSearch);
 
