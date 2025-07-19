@@ -1,7 +1,9 @@
 package br.com.eaugusto.domain;
 
+import java.util.ArrayList;
 import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -42,8 +44,12 @@ public class Course {
 	@Column(name = "description", length = 100, nullable = false)
 	private String description;
 
-	@OneToMany(mappedBy = "course")
+	@OneToMany(mappedBy = "course", cascade = CascadeType.ALL, orphanRemoval = true)
 	private List<Enrollment> enrollments;
+
+	public Course() {
+		this.enrollments = new ArrayList<>();
+	}
 
 	public Long getId() {
 		return id;

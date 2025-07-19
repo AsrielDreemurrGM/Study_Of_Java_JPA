@@ -37,6 +37,7 @@ public class StudentTest {
 	private final IEnrollmentDAO enrollmentDao;
 	private final ICourseDAO courseDAO;
 	private Student student;
+	private Enrollment enrollment;
 
 	public StudentTest() {
 		studentDao = new StudentDAO();
@@ -52,7 +53,7 @@ public class StudentTest {
 	public void setup() {
 		List<Computer> computerList = createComputerlist();
 		Computer computer3 = createComputer();
-		Enrollment enrollment = createEnrollment();
+		enrollment = createEnrollment();
 
 		student = new Student();
 		student.setCode("A1");
@@ -94,14 +95,14 @@ public class StudentTest {
 		course.setDescription("Enrollment-Test-Course-Description");
 		courseDAO.register(course);
 
-		Enrollment enrollment = new Enrollment();
-		enrollment.setCode("TestEnroll");
-		enrollment.setEnrollmentDate(Instant.now());
-		enrollment.setStatus("ACTIVE");
-		enrollment.setAmount(1000.00);
-		enrollment.setCourse(course);
+		Enrollment newEnrollment = new Enrollment();
+		newEnrollment.setCode("TestEnroll");
+		newEnrollment.setEnrollmentDate(Instant.now());
+		newEnrollment.setStatus("ACTIVE");
+		newEnrollment.setAmount(1000.00);
+		newEnrollment.setCourse(course);
 
-		return enrollment;
+		return newEnrollment;
 	}
 
 	/**
@@ -119,14 +120,14 @@ public class StudentTest {
 			computerDao.delete(eachComputer);
 		}
 
-		List<Course> allCourses = courseDAO.searchAll(Course.class);
-		for (Course eachCourse : allCourses) {
-			courseDAO.delete(eachCourse);
-		}
-
 		List<Enrollment> allEnrollments = enrollmentDao.searchAll(Enrollment.class);
 		for (Enrollment eachEnrollment : allEnrollments) {
 			enrollmentDao.delete(eachEnrollment);
+		}
+
+		List<Course> allCourses = courseDAO.searchAll(Course.class);
+		for (Course eachCourse : allCourses) {
+			courseDAO.delete(eachCourse);
 		}
 	}
 

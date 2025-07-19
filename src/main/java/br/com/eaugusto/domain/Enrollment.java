@@ -2,6 +2,7 @@ package br.com.eaugusto.domain;
 
 import java.time.Instant;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.ForeignKey;
@@ -10,6 +11,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToOne;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
@@ -52,8 +54,8 @@ public class Enrollment {
 	@JoinColumn(name = "id_course_fk", foreignKey = @ForeignKey(name = "fk_course_enrollment"), referencedColumnName = "id", nullable = false)
 	private Course course;
 
-	@ManyToOne
-	@JoinColumn(name = "id_student_fk", foreignKey = @ForeignKey(name = "fk_student_enrollment"), referencedColumnName = "id", nullable = false)
+	@OneToOne(cascade = CascadeType.ALL, orphanRemoval = true)
+	@JoinColumn(name = "id_student_fk", foreignKey = @ForeignKey(name = "fk_student_enrollment"), nullable = false)
 	private Student student;
 
 	public Student getStudent() {

@@ -5,6 +5,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 
+import java.time.Instant;
 import java.util.List;
 
 import org.junit.jupiter.api.AfterEach;
@@ -12,8 +13,14 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import br.com.eaugusto.dao.CourseDAO;
+import br.com.eaugusto.dao.EnrollmentDAO;
 import br.com.eaugusto.dao.ICourseDAO;
+import br.com.eaugusto.dao.IEnrollmentDAO;
+import br.com.eaugusto.dao.IStudentDAO;
+import br.com.eaugusto.dao.StudentDAO;
 import br.com.eaugusto.domain.Course;
+import br.com.eaugusto.domain.Enrollment;
+import br.com.eaugusto.domain.Student;
 
 /**
  * Unit tests for {@link br.com.eaugusto.domain.Course} entity using
@@ -35,10 +42,14 @@ import br.com.eaugusto.domain.Course;
 public class CourseTest {
 
 	private final ICourseDAO courseDao;
+	private final IStudentDAO studentDao;
+	private final IEnrollmentDAO enrollmentDao;
 	private Course course;
 
 	public CourseTest() {
 		courseDao = new CourseDAO();
+		studentDao = new StudentDAO();
+		enrollmentDao = new EnrollmentDAO();
 	}
 
 	/**
@@ -53,11 +64,24 @@ public class CourseTest {
 	}
 
 	/**
-	 * Cleans up the Course instance after each test.
+	 * Cleans up the Enrollment, Student And Course instances after each test.
 	 */
 	@AfterEach
-	public void cleanupCourse() {
-		courseDao.delete(course);
+	public void cleanup() {
+		List<Student> allStudents = studentDao.searchAll(Student.class);
+		for (Student eachStudent : allStudents) {
+			studentDao.delete(eachStudent);
+		}
+
+		List<Enrollment> allEnrollments = enrollmentDao.searchAll(Enrollment.class);
+		for (Enrollment eachEnrollment : allEnrollments) {
+			enrollmentDao.delete(eachEnrollment);
+		}
+
+		List<Course> allCourses = courseDao.searchAll(Course.class);
+		for (Course eachCourse : allCourses) {
+			courseDao.delete(eachCourse);
+		}
 	}
 
 	/**
@@ -148,5 +172,31 @@ public class CourseTest {
 
 		Course result = courseDao.searchById(Course.class, temporaryCourse.getId());
 		assertNull(result);
+	}
+
+	@Test
+	public void enrollmentRelationshipTest() {
+		Course registeredCourse = courseDao.register(course);
+
+		Student student = new Student();
+		student.setCode("S123456");
+		student.setName("Enrollment Test Student");
+
+		Enrollment enrollment = new Enrollment();
+		enrollment.setCode("EN123456");
+		enrollment.setAmount(1500.0);
+		enrollment.setEnrollmentDate(Instant.now());
+		enrollment.setStatus("ACTIVE");
+		enrollment.setStudent(student);
+		enrollment.setCourse(registeredCourse);
+
+		enrollmentDao.register(enrollment);
+
+		registeredCourse.setEnrollments(List.of(enrollment));
+		courseDao.update(registeredCourse);
+
+		assertNotNull(registeredCourse.getEnrollments());
+		assertFalse(registeredCourse.getEnrollments().isEmpty());
+		assertEquals("EN123456", registeredCourse.getEnrollments().get(0).getCode());
 	}
 }

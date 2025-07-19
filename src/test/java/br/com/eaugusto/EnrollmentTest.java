@@ -92,7 +92,7 @@ public class EnrollmentTest {
 		Student newStudent = new Student();
 		newStudent.setCode("TIME" + System.currentTimeMillis() % 10000);
 		newStudent.setName("Enrollment Test Course");
-		return studentDao.register(newStudent);
+		return newStudent;
 	}
 
 	/**
@@ -100,21 +100,21 @@ public class EnrollmentTest {
 	 */
 	@AfterEach
 	public void cleanup() {
-		List<Enrollment> allEnrollments = enrollmentDAO.searchAll(Enrollment.class);
-		for (Enrollment eachEnrollment : allEnrollments) {
-			enrollmentDAO.delete(eachEnrollment);
-		}
 
 		List<Student> allStudents = studentDao.searchAll(Student.class);
 		for (Student eachStudent : allStudents) {
 			studentDao.delete(eachStudent);
 		}
 
+		List<Enrollment> allEnrollments = enrollmentDAO.searchAll(Enrollment.class);
+		for (Enrollment eachEnrollment : allEnrollments) {
+			enrollmentDAO.delete(eachEnrollment);
+		}
+
 		List<Course> allCourses = courseDAO.searchAll(Course.class);
 		for (Course eachCourse : allCourses) {
 			courseDAO.delete(eachCourse);
 		}
-
 	}
 
 	/**
@@ -179,8 +179,6 @@ public class EnrollmentTest {
 	@Test
 	public void updateTest() {
 		enrollment = enrollmentDAO.register(enrollment);
-		course = createCourse();
-		student = createStudent();
 
 		enrollment.setCode("A3");
 		enrollment.setEnrollmentDate(Instant.now());
