@@ -27,9 +27,11 @@ import javax.persistence.Persistence;
  */
 public class GenericDAO<T> implements IGenericDAO<T> {
 
+	private static final String PROJECTNAME = "Study_Of_Java_JPA";
+
 	@Override
 	public T register(T entity) {
-		EntityManagerFactory entityManagerFactory = Persistence.createEntityManagerFactory("Study_Of_Java_JPA");
+		EntityManagerFactory entityManagerFactory = Persistence.createEntityManagerFactory(PROJECTNAME);
 		EntityManager entityManager = entityManagerFactory.createEntityManager();
 
 		entityManager.getTransaction().begin();
@@ -44,7 +46,7 @@ public class GenericDAO<T> implements IGenericDAO<T> {
 
 	@Override
 	public T searchById(Class<T> classType, Long id) {
-		EntityManagerFactory entityManagerFactory = Persistence.createEntityManagerFactory("Study_Of_Java_JPA");
+		EntityManagerFactory entityManagerFactory = Persistence.createEntityManagerFactory(PROJECTNAME);
 		EntityManager entityManager = entityManagerFactory.createEntityManager();
 
 		entityManager.getTransaction().begin();
@@ -59,7 +61,7 @@ public class GenericDAO<T> implements IGenericDAO<T> {
 
 	@Override
 	public List<T> searchAll(Class<T> classType) {
-		EntityManagerFactory entityManagerFactory = Persistence.createEntityManagerFactory("Study_Of_Java_JPA");
+		EntityManagerFactory entityManagerFactory = Persistence.createEntityManagerFactory(PROJECTNAME);
 		EntityManager entityManager = entityManagerFactory.createEntityManager();
 
 		entityManager.getTransaction().begin();
@@ -77,7 +79,7 @@ public class GenericDAO<T> implements IGenericDAO<T> {
 
 	@Override
 	public T update(T entityWithNewInformation) {
-		EntityManagerFactory entityManagerFactory = Persistence.createEntityManagerFactory("Study_Of_Java_JPA");
+		EntityManagerFactory entityManagerFactory = Persistence.createEntityManagerFactory(PROJECTNAME);
 		EntityManager entityManager = entityManagerFactory.createEntityManager();
 
 		entityManager.getTransaction().begin();
@@ -92,7 +94,7 @@ public class GenericDAO<T> implements IGenericDAO<T> {
 
 	@Override
 	public void delete(T entity) {
-		EntityManagerFactory entityManagerFactory = Persistence.createEntityManagerFactory("Study_Of_Java_JPA");
+		EntityManagerFactory entityManagerFactory = Persistence.createEntityManagerFactory(PROJECTNAME);
 		EntityManager entityManager = entityManagerFactory.createEntityManager();
 
 		entityManager.getTransaction().begin();
