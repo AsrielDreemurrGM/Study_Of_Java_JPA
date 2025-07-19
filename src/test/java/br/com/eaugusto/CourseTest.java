@@ -14,10 +14,10 @@ import org.junit.jupiter.api.Test;
 
 import br.com.eaugusto.dao.CourseDAO;
 import br.com.eaugusto.dao.EnrollmentDAO;
-import br.com.eaugusto.dao.ICourseDAO;
-import br.com.eaugusto.dao.IEnrollmentDAO;
-import br.com.eaugusto.dao.IStudentDAO;
 import br.com.eaugusto.dao.StudentDAO;
+import br.com.eaugusto.dao.interfaces.ICourseDAO;
+import br.com.eaugusto.dao.interfaces.IEnrollmentDAO;
+import br.com.eaugusto.dao.interfaces.IStudentDAO;
 import br.com.eaugusto.domain.Course;
 import br.com.eaugusto.domain.Enrollment;
 import br.com.eaugusto.domain.Student;

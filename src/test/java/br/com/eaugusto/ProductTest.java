@@ -13,8 +13,8 @@ import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import br.com.eaugusto.dao.IProductDAO;
 import br.com.eaugusto.dao.ProductDAO;
+import br.com.eaugusto.dao.interfaces.IProductDAO;
 import br.com.eaugusto.domain.Product;
 
 /**

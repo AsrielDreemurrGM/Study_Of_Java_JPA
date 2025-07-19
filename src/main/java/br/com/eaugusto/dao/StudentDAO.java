@@ -1,6 +1,7 @@
 package br.com.eaugusto.dao;
 
 import br.com.eaugusto.dao.generic.GenericDAO;
+import br.com.eaugusto.dao.interfaces.IStudentDAO;
 import br.com.eaugusto.domain.Student;
 
 /**

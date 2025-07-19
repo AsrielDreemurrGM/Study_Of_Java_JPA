@@ -1,12 +1,12 @@
-package br.com.eaugusto.dao;
+package br.com.eaugusto.dao.interfaces;
 
 import br.com.eaugusto.dao.generic.IGenericDAO;
-import br.com.eaugusto.domain.Student;
+import br.com.eaugusto.domain.Computer;
 
 /**
  * @author Eduardo Augusto (github.com/AsrielDreemurrGM/)
  * @since July 17, 2025
  */
-public interface IStudentDAO extends IGenericDAO<Student> {
+public interface IComputerDAO extends IGenericDAO<Computer> {
 
 }

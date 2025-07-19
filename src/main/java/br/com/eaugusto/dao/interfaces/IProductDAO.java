@@ -1,4 +1,4 @@
-package br.com.eaugusto.dao;
+package br.com.eaugusto.dao.interfaces;
 
 import br.com.eaugusto.dao.generic.IGenericDAO;
 import br.com.eaugusto.domain.Product;

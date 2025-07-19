@@ -12,9 +12,9 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import br.com.eaugusto.dao.ComputerDAO;
-import br.com.eaugusto.dao.IComputerDAO;
-import br.com.eaugusto.dao.IStudentDAO;
 import br.com.eaugusto.dao.StudentDAO;
+import br.com.eaugusto.dao.interfaces.IComputerDAO;
+import br.com.eaugusto.dao.interfaces.IStudentDAO;
 import br.com.eaugusto.domain.Computer;
 import br.com.eaugusto.domain.Student;
 
