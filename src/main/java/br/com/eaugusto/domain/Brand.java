@@ -1,10 +1,14 @@
 package br.com.eaugusto.domain;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
@@ -29,6 +33,13 @@ public class Brand {
 
 	@Column(name = "slogan", length = 100, nullable = false)
 	private String slogan;
+
+	@OneToMany(mappedBy = "brand")
+	private List<Car> cars;
+
+	public Brand() {
+		this.cars = new ArrayList<>();
+	}
 
 	public Long getId() {
 		return id;
