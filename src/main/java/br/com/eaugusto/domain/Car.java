@@ -17,6 +17,14 @@ import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
 /**
+ * Entity representing a car.
+ * 
+ * <p>
+ * A Car has unique code, name, description, price, and stock quantity. It
+ * belongs to one {@link Brand} and can have multiple associated
+ * {@link Accessory} entities through a many-to-many relationship.
+ * </p>
+ * 
  * @author Eduardo Augusto (github.com/AsrielDreemurrGM/)
  * @since July 19, 2025
  */

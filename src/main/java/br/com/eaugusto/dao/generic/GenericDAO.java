@@ -10,20 +10,19 @@ import javax.persistence.Persistence;
  * Default implementation of {@link IGenericDAO} using JPA.
  *
  * <p>
- * This class handles generic CRUD operations for any entity type {@code T}. It
- * manages transactions and life cycle operations through {@link EntityManager}
- * instances.
+ * This generic DAO handles standard CRUD operations for any entity type
+ * {@code T}, leveraging {@link EntityManager} and JPA for persistence.
  * </p>
  *
  * <p>
- * The persistence unit used is {@code Study_Of_Java_JPA}, as defined in
+ * The configured persistence unit name is {@code Study_Of_Java_JPA}, defined in
  * {@code persistence.xml}.
  * </p>
  *
+ * @param <T> The type of entity managed by this DAO.
+ * 
  * @author Eduardo Augusto (github.com/AsrielDreemurrGM/)
  * @since July 15, 2025
- * 
- * @param <T> The entity type managed by this DAO implementation.
  */
 public class GenericDAO<T> implements IGenericDAO<T> {
 

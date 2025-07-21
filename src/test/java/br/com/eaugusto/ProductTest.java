@@ -1,9 +1,9 @@
 package br.com.eaugusto;
 
-import static org.junit.Assert.assertNull;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertNull;
 
 import java.time.Instant;
 import java.time.temporal.ChronoUnit;
@@ -18,8 +18,7 @@ import br.com.eaugusto.dao.interfaces.IProductDAO;
 import br.com.eaugusto.domain.Product;
 
 /**
- * Unit tests for {@link br.com.eaugusto.domain.Product} entity using
- * {@link br.com.eaugusto.dao.ProductDAO}.
+ * Unit tests for {@link Product} entity using {@link ProductDAO}.
  *
  * <p>
  * This test class ensures that all core CRUD functionalities are working as
@@ -28,8 +27,7 @@ import br.com.eaugusto.domain.Product;
  * </p>
  *
  * <p>
- * Time-based fields are compared using
- * {@link java.time.temporal.ChronoUnit#MILLIS} for accuracy.
+ * Time-based fields are compared using {@link ChronoUnit#MILLIS} for accuracy.
  * </p>
  *
  * @author Eduardo Augusto (github.com/AsrielDreemurrGM/)

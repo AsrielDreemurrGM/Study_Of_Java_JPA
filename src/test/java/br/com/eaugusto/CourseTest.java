@@ -1,9 +1,9 @@
 package br.com.eaugusto;
 
-import static org.junit.Assert.assertNull;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertNull;
 
 import java.time.Instant;
 import java.util.List;
@@ -23,19 +23,19 @@ import br.com.eaugusto.domain.Enrollment;
 import br.com.eaugusto.domain.Student;
 
 /**
- * Unit tests for {@link br.com.eaugusto.domain.Course} entity using
- * {@link br.com.eaugusto.dao.CourseDAO}.
- *
+ * Unit tests for {@link Course} entity using {@link CourseDAO}.
+ * 
  * <p>
- * This test class ensures that all core CRUD functionalities are working as
- * expected for {@link Course} entities.
+ * This test suite verifies CRUD operations for {@link Course} entities,
+ * including proper handling of relationships with {@link Enrollment} and
+ * {@link Student} entities.
  * </p>
- *
+ * 
  * <p>
- * Each test ensures correct persistence behavior through the generic DAO
- * structure.
+ * Each test runs with isolated data, cleaning up after execution to maintain
+ * test independence.
  * </p>
- *
+ * 
  * @author Eduardo Augusto (github.com/AsrielDreemurrGM/)
  * @since July 15, 2025
  */

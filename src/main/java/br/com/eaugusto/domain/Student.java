@@ -18,8 +18,25 @@ import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
 /**
+ * Represents a student enrolled in a course.
+ *
+ * <p>
+ * This class is mapped to the table {@code tb_student} and includes personal
+ * data, one-to-one enrollment information, and a many-to-many relationship with
+ * computers.
+ * </p>
+ *
+ * <p>
+ * The {@link Enrollment} is tightly coupled with the student via a
+ * {@code @OneToOne} relationship. The {@link Computer} association uses a
+ * {@code @ManyToMany} relationship and is eagerly fetched.
+ * </p>
+ * 
  * @author Eduardo Augusto (github.com/AsrielDreemurrGM/)
  * @since July 17, 2025
+ * 
+ * @see javax.persistence.Entity
+ * @see javax.persistence.Table
  */
 @Entity
 @Table(name = "tb_student")

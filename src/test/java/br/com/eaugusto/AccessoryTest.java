@@ -1,9 +1,9 @@
 package br.com.eaugusto;
 
-import static org.junit.Assert.assertNull;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertNull;
 
 import java.util.List;
 
@@ -16,6 +16,13 @@ import br.com.eaugusto.dao.interfaces.IAccessoryDAO;
 import br.com.eaugusto.domain.Accessory;
 
 /**
+ * Unit tests for {@link Accessory} entity using {@link AccessoryDAO}.
+ * 
+ * <p>
+ * Tests cover all basic CRUD operations and ensure data consistency between
+ * in-memory objects and the database.
+ * </p>
+ * 
  * @author Eduardo Augusto (github.com/AsrielDreemurrGM/)
  * @since July 19, 2025
  */

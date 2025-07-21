@@ -1,9 +1,9 @@
 package br.com.eaugusto;
 
-import static org.junit.Assert.assertNull;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertNull;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -23,6 +23,18 @@ import br.com.eaugusto.domain.Brand;
 import br.com.eaugusto.domain.Car;
 
 /**
+ * Unit tests for {@link Car} entity including relationships with {@link Brand}
+ * and {@link Accessory} entities.
+ * 
+ * <p>
+ * Verifies correct persistence, retrieval, update, and deletion of {@link Car}
+ * entities along with their related entities.
+ * </p>
+ * 
+ * <p>
+ * Each test ensures data isolation and proper cleanup after execution.
+ * </p>
+ * 
  * @author Eduardo Augusto (github.com/AsrielDreemurrGM/)
  * @since July 19, 2025
  */

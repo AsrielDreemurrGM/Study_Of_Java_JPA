@@ -1,9 +1,9 @@
 package br.com.eaugusto;
 
-import static org.junit.Assert.assertNull;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertNull;
 
 import java.util.List;
 
@@ -16,6 +16,11 @@ import br.com.eaugusto.dao.interfaces.IBrandDAO;
 import br.com.eaugusto.domain.Brand;
 
 /**
+ * Unit tests for the {@link Brand} entity and its DAO operations.
+ * <p>
+ * Tests cover CRUD operations for {@link Brand} entity.
+ * </p>
+ * 
  * @author Eduardo Augusto (github.com/AsrielDreemurrGM/)
  * @since July 19, 2025
  */

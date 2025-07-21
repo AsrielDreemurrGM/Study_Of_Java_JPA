@@ -14,17 +14,25 @@ import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
 /**
- * Represents a course entity with its identifying code, name, and description.
+ * Represents a course entity offered in the system.
  *
  * <p>
- * This class is mapped to the database table {@code tb_course}.
+ * This class is mapped to the database table {@code tb_course}, and contains
+ * identifying information such as code, name, and description. It also
+ * maintains a list of student enrollments associated with the course.
  * </p>
  *
+ * <p>
+ * The relationship with {@link Enrollment} is defined as {@code @OneToMany} and
+ * uses cascade operations and orphan removal for automatic management.
+ * </p>
+ * 
  * @author Eduardo Augusto (github.com/AsrielDreemurrGM/)
  * @since July 14, 2025
  * 
  * @see javax.persistence.Entity
  * @see javax.persistence.Table
+ * @see Enrollment
  */
 @Entity
 @Table(name = "tb_course")

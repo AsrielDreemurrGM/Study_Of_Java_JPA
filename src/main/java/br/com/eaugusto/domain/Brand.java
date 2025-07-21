@@ -13,6 +13,13 @@ import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
 /**
+ * Entity representing a car brand.
+ * 
+ * <p>
+ * Each Brand has a unique code, a name, and a slogan. It holds a one-to-many
+ * relationship with {@link Car} entities.
+ * </p>
+ * 
  * @author Eduardo Augusto (github.com/AsrielDreemurrGM/)
  * @since July 19, 2025
  */

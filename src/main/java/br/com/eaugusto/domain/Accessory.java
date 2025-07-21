@@ -13,6 +13,13 @@ import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
 /**
+ * Entity representing an accessory that can be associated with cars.
+ * 
+ * <p>
+ * Each Accessory has a unique code, a name, a price, and stock quantity. It
+ * maintains a bidirectional many-to-many relationship with {@link Car}.
+ * </p>
+ * 
  * @author Eduardo Augusto (github.com/AsrielDreemurrGM/)
  * @since July 19, 2025
  */

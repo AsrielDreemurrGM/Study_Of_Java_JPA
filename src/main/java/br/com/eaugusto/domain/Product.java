@@ -11,14 +11,23 @@ import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
 /**
- * Represents a product entity with details such as code, name, price, and stock
- * information.
+ * Represents a product available in the system.
  *
  * <p>
- * This class is mapped to the database table {@code tb_product} and is managed
- * by JPA using {@link javax.persistence.EntityManager}.
+ * This class is mapped to the database table {@code tb_product} and includes
+ * fields for code, name, description, price, stock quantity, and creation date.
  * </p>
  *
+ * <p>
+ * It is managed by JPA through an {@link javax.persistence.EntityManager} and
+ * is useful for managing product catalogs or inventory systems.
+ * </p>
+ * 
+ * <p>
+ * All fields are mandatory and mapped using standard JPA annotations with
+ * appropriate constraints like length and uniqueness.
+ * </p>
+ * 
  * @author Eduardo Augusto (github.com/AsrielDreemurrGM/)
  * @since July 16, 2025
  * 

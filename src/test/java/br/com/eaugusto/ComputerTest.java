@@ -1,9 +1,9 @@
 package br.com.eaugusto;
 
-import static org.junit.Assert.assertNull;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertNull;
 
 import java.util.List;
 
@@ -19,6 +19,11 @@ import br.com.eaugusto.domain.Computer;
 import br.com.eaugusto.domain.Student;
 
 /**
+ * Unit tests for the {@link Computer} entity and its associated DAO operations.
+ * <p>
+ * Tests cover CRUD operations and many-to-many relationships between
+ * {@link Computer} and {@link Student} entities.
+ * </p>
  * 
  * @author Eduardo Augusto (github.com/AsrielDreemurrGM/)
  * @since July 17, 2025

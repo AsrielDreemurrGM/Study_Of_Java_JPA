@@ -1,9 +1,9 @@
 package br.com.eaugusto;
 
-import static org.junit.Assert.assertNull;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertNull;
 
 import java.time.Instant;
 import java.time.temporal.ChronoUnit;
@@ -24,20 +24,19 @@ import br.com.eaugusto.domain.Enrollment;
 import br.com.eaugusto.domain.Student;
 
 /**
- * Unit tests for {@link br.com.eaugusto.domain.Enrollment} entity using
- * {@link br.com.eaugusto.dao.EnrollmentDAO}.
+ * Unit tests for {@link Enrollment} entity using {@link EnrollmentDAO}.
  * 
  * <p>
- * This test class ensures that all core CRUD functionalities are working as
- * expected for {@link Enrollment} entities, including handling of date-time
- * attributes and numerical values.
+ * This test class ensures correct CRUD functionality for {@link Enrollment}
+ * entities, including validation of date-time and numeric fields with
+ * millisecond precision.
  * </p>
- *
+ * 
  * <p>
- * Time-based fields are compared using
- * {@link java.time.temporal.ChronoUnit#MILLIS} for accuracy.
+ * Tests also verify the integrity of relationships between {@link Enrollment},
+ * {@link Course}, and {@link Student} entities.
  * </p>
- *
+ * 
  * @author Eduardo Augusto (github.com/AsrielDreemurrGM/)
  * @since July 15, 2025
  */

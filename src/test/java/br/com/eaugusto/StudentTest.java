@@ -1,9 +1,9 @@
 package br.com.eaugusto;
 
-import static org.junit.Assert.assertNull;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertNull;
 
 import java.time.Instant;
 import java.util.ArrayList;
@@ -26,7 +26,13 @@ import br.com.eaugusto.domain.Course;
 import br.com.eaugusto.domain.Enrollment;
 import br.com.eaugusto.domain.Student;
 
-/*
+/**
+ * Unit tests for the {@link Student} entity and its associated DAO operations.
+ * <p>
+ * Tests cover CRUD operations and relationships involving {@link Student},
+ * {@link Enrollment}, {@link Computer}, and {@link Course} entities.
+ * </p>
+ * 
  * @author Eduardo Augusto (github.com/AsrielDreemurrGM/)
  * @since July 17, 2025
  */
@@ -37,7 +43,6 @@ public class StudentTest {
 	private final IEnrollmentDAO enrollmentDao;
 	private final ICourseDAO courseDAO;
 	private Student student;
-	private Enrollment enrollment;
 
 	public StudentTest() {
 		studentDao = new StudentDAO();
@@ -51,6 +56,7 @@ public class StudentTest {
 	 */
 	@BeforeEach
 	public void setup() {
+		Enrollment enrollment;
 		List<Computer> computerList = createComputerlist();
 		Computer computer3 = createComputer();
 		enrollment = createEnrollment();
